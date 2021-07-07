@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import { getMovies } from "../services/fakeMovieService";
 import "./movies.css";
 import "bootstrap/dist/css/bootstrap.css";
+import Like from "./common/like";
+import Share from "./common/share";
+
 class Movies extends Component {
   state = {
     movies: getMovies(),
@@ -17,6 +20,9 @@ class Movies extends Component {
   getTitle = () => {
     return `Showing  ${this.state.movies.length}  movies in the database`;
   };
+  handleLikeClicked(id) {
+    console.log(id);
+  }
 
   renderMovies = () => {
     if (this.state.movies.length > 0) {
@@ -31,6 +37,7 @@ class Movies extends Component {
                 <th>Stock</th>
                 <th>Rate</th>
                 <th />
+                <th />
               </tr>
             </thead>
             <tbody>
@@ -41,10 +48,17 @@ class Movies extends Component {
                   <td>{item.numberInStock}</td>
                   <td>{item.dailyRentalRate}</td>
                   <td>
+                    <Like
+                      onIconClicked={this.handleLikeClicked}
+                      id={item._id}
+                    />
+                  </td>
+                  <td>
                     <button
                       onClick={() => {
                         this.handleDelete(item);
                       }}
+                      className="btn btn-danger btn-sm"
                     >
                       Delete
                     </button>
