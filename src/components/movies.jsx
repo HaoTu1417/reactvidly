@@ -20,8 +20,14 @@ class Movies extends Component {
   getTitle = () => {
     return `Showing  ${this.state.movies.length}  movies in the database`;
   };
-  handleLikeClicked(id) {
-    console.log(id);
+  handleLikeClicked = (id) => {
+
+    const newMovies = [...this.state.movies];
+    let index = newMovies.findIndex(x => x._id === id);
+    console.log(newMovies[index].isliked);
+    newMovies[index].isliked = !newMovies[index].isliked;
+    console.log(newMovies[index].isliked);
+    this.setState({ movies: newMovies });
   }
 
   renderMovies = () => {
@@ -50,7 +56,7 @@ class Movies extends Component {
                   <td>
                     <Like
                       onIconClicked={this.handleLikeClicked}
-                      id={item._id}
+                      movie={item}
                     />
                   </td>
                   <td>
